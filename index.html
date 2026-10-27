@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f5f0">
+  <meta name="description" content="Objetos cotidianos, diseñados para durar. Decoración útil para casa, fabricada bajo demanda con impresión 3D.">
+  <title>La Trastería — Objetos para vivir mejor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f6f5f0;
+      --ink: #232720;
+      --muted: #73766d;
+      --line: #dedfd7;
+      --green: #35583f;
+      --lime: #d7ed9f;
+      --coral: #ed7658;
+      --blue: #a9c8d8;
+      --white: #fffefa;
+      --font-body: "DM Sans", sans-serif;
+      --font-display: "Manrope", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+    button, a { color: inherit; font: inherit; }
+    button { cursor: pointer; }
+    a { text-decoration: none; }
+    .announcement { display: flex; justify-content: center; padding: 10px 16px; background: var(--green); color: white; font-size: 11px; letter-spacing: .04em; }
+    .announcement strong { color: var(--lime); font-weight: 600; }
+    .site-header { position: sticky; top: 0; z-index: 5; border-bottom: 1px solid #dedfd7cc; background: #f6f5f0ed; backdrop-filter: blur(14px); }
+    .nav { width: min(1320px, calc(100% - 64px)); height: 74px; margin: auto; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; width: max-content; font: 800 17px var(--font-display); letter-spacing: -.06em; }
+    .brand-mark { width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; background: var(--coral); color: white; font-size: 15px; letter-spacing: 0; }
+    .nav-links { display: flex; align-items: center; gap: 34px; font-size: 12px; color: #555950; }
+    .nav-links a:hover { color: var(--green); }
+    .nav-actions { justify-self: end; display: flex; align-items: center; gap: 22px; }
+    .text-button, .icon-button { border: 0; background: none; padding: 8px; }
+    .text-button { font-size: 12px; }
+    .cart-trigger { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; }
+    .cart-count { display: grid; min-width: 20px; height: 20px; place-items: center; border-radius: 50%; background: var(--lime); font-size: 10px; font-weight: 700; }
+    .hero { width: min(1320px, calc(100% - 64px)); min-height: 570px; margin: 0 auto; display: grid; grid-template-columns: .92fr 1.08fr; align-items: center; gap: 54px; padding: 48px 0 62px; }
+    .hero-copy { position: relative; z-index: 1; padding: 0 0 10px 5.5%; animation: arrive .65s ease both; }
+    .eyebrow { display: flex; align-items: center; gap: 9px; color: var(--green); font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 20px; height: 1px; background: var(--coral); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 570px; margin: 23px 0 19px; font: 500 clamp(42px, 5vw, 67px)/1.04 var(--font-display); letter-spacing: -.075em; }
+    h1 em { color: var(--green); font-style: normal; }
+    .hero-copy > p { max-width: 380px; margin-bottom: 27px; color: var(--muted); font-size: 14px; line-height: 1.8; }
+    .primary-button { display: inline-flex; align-items: center; gap: 24px; min-height: 48px; padding: 0 17px 0 21px; border: 0; border-radius: 3px; background: var(--green); color: white; font-size: 12px; font-weight: 600; transition: background .2s, transform .2s; }
+    .primary-button:hover { background: #263f2e; transform: translateY(-2px); }
+    .primary-button span { font-size: 17px; }
+    .hero-notes { display: flex; gap: 22px; margin-top: 34px; color: var(--muted); font-size: 10px; }
+    .hero-notes span { display: flex; align-items: center; gap: 7px; }
+    .hero-notes b { color: var(--green); font-size: 14px; }
+    .hero-image { position: relative; min-height: 440px; overflow: hidden; background: var(--blue); animation: arrive .8s .08s ease both; }
+    .hero-image > img { position: absolute; width: 100%; height: 100%; object-fit: cover; object-position: center 54%; }
+    .hero-image::after { position: absolute; inset: 45% 0 0; content: ""; background: linear-gradient(transparent, #1d292236); }
+    .image-caption { position: absolute; z-index: 1; right: 20px; bottom: 17px; color: white; font-size: 10px; }
+    .hero-sticker { position: absolute; z-index: 2; top: 22px; left: -20px; width: 90px; height: 90px; display: grid; align-content: center; justify-items: center; border-radius: 50%; background: var(--lime); color: var(--green); font-size: 9px; line-height: 1.45; text-align: center; transform: rotate(-10deg); }
+    .hero-sticker strong { font: 800 17px var(--font-display); }
+    .section { border-top: 1px solid var(--line); }
+    .section-inner { width: min(1320px, calc(100% - 64px)); margin: auto; }
+    .benefits { display: grid; grid-template-columns: repeat(4, 1fr); padding: 23px 0; border-bottom: 1px solid var(--line); }
+    .benefit { display: flex; justify-content: center; align-items: center; gap: 10px; border-right: 1px solid var(--line); font-size: 11px; }
+    .benefit:last-child { border: 0; }
+    .benefit-icon { color: var(--green); font-size: 17px; }
+    .shop { padding: 76px 0 84px; }
+    .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 29px; }
+    .section-heading .eyebrow { margin-bottom: 12px; }
+    h2 { margin-bottom: 0; font: 600 34px/1.1 var(--font-display); letter-spacing: -.065em; }
+    .section-subtitle { margin: 9px 0 0; color: var(--muted); font-size: 12px; }
+    .filters { display: flex; gap: 7px; flex-wrap: wrap; }
+    .filter-button { padding: 9px 13px; border: 1px solid var(--line); border-radius: 2px; background: transparent; color: var(--muted); font-size: 10px; transition: all .2s; }
+    .filter-button:hover, .filter-button.active { border-color: var(--green); background: var(--green); color: white; }
+    .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 17px; }
+    .product-card { min-width: 0; animation: arrive .45s ease both; }
+    .product-visual { position: relative; aspect-ratio: 1 / 1.08; overflow: hidden; background: #e6e4da; }
+    .product-visual img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform .45s cubic-bezier(.2,.7,.2,1); }
+    .product-card:hover .product-visual img { transform: scale(1.045); }
+    .tag { position: absolute; top: 12px; left: 12px; padding: 6px 8px; background: var(--white); font-size: 9px; }
+    .quick-add { position: absolute; right: 11px; bottom: 11px; display: grid; width: 38px; height: 38px; place-items: center; border: 0; border-radius: 50%; background: var(--white); font-size: 20px; transition: background .2s, color .2s; }
+    .quick-add:hover { background: var(--green); color: white; }
+    .product-meta { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; padding-top: 12px; }
+    .product-meta h3 { margin: 0; font: 600 13px var(--font-display); letter-spacing: -.025em; }
+    .price { white-space: nowrap; font-size: 12px; font-weight: 600; }
+    .product-detail { display: flex; justify-content: space-between; gap: 8px; margin-top: 5px; color: var(--muted); font-size: 10px; }
+    .swatches { display: flex; gap: 5px; }
+    .swatch { width: 9px; height: 9px; border: 1px solid #0002; border-radius: 50%; }
+    .story { display: grid; grid-template-columns: 1fr 1fr; min-height: 350px; background: #e7e9df; }
+    .story-image { min-height: 350px; overflow: hidden; }
+    .story-image img { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .story-copy { display: flex; flex-direction: column; justify-content: center; align-items: start; padding: 50px 12%; }
+    .story-copy h2 { max-width: 390px; margin: 16px 0; font-size: 38px; }
+    .story-copy p { max-width: 400px; margin-bottom: 22px; color: #64695f; font-size: 12px; line-height: 1.8; }
+    .underlined-link { display: inline-flex; align-items: center; gap: 12px; padding-bottom: 5px; border-bottom: 1px solid var(--green); color: var(--green); font-size: 11px; font-weight: 600; }
+    .newsletter { display: flex; justify-content: space-between; align-items: center; gap: 32px; padding: 58px 0; }
+    .newsletter h2 { font-size: 27px; }
+    .newsletter p { margin: 8px 0 0; color: var(--muted); font-size: 11px; }
+    .subscribe-form { display: flex; width: min(420px, 100%); border-bottom: 1px solid var(--ink); }
+    .subscribe-form input { flex: 1; min-width: 0; padding: 13px 4px; border: 0; outline: 0; background: transparent; font: 11px var(--font-body); }
+    .subscribe-form button { border: 0; background: transparent; font-size: 11px; font-weight: 600; }
+    .site-footer { background: var(--green); color: white; }
+    .footer-inner { width: min(1320px, calc(100% - 64px)); margin: auto; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 23px 0; }
+    .footer-inner .brand-mark { background: var(--lime); color: var(--green); }
+    .footer-note, .footer-links { color: #d7dfd4; font-size: 10px; }
+    .footer-links { display: flex; gap: 20px; }
+    .cart-overlay { position: fixed; z-index: 9; inset: 0; visibility: hidden; background: #10150e66; opacity: 0; transition: opacity .25s, visibility .25s; }
+    .cart-overlay.open { visibility: visible; opacity: 1; }
+    .cart-drawer { position: absolute; top: 0; right: 0; width: min(430px, 100%); height: 100%; display: flex; flex-direction: column; padding: 25px; background: var(--paper); transform: translateX(100%); transition: transform .3s ease; }
+    .cart-overlay.open .cart-drawer { transform: translateX(0); }
+    .cart-head { display: flex; justify-content: space-between; align-items: center; padding-bottom: 19px; border-bottom: 1px solid var(--line); }
+    .cart-head h2 { font-size: 22px; }
+    .close-cart { width: 36px; height: 36px; border: 1px solid var(--line); background: transparent; font-size: 19px; }
+    .cart-items { flex: 1; overflow: auto; }
+    .empty-cart { display: grid; min-height: 230px; place-content: center; color: var(--muted); font-size: 12px; text-align: center; }
+    .cart-row { display: grid; grid-template-columns: 72px 1fr auto; align-items: center; gap: 13px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+    .cart-row img { width: 72px; height: 80px; object-fit: cover; }
+    .cart-row h3 { margin: 0 0 5px; font: 600 12px var(--font-display); }
+    .cart-row p { margin: 0; color: var(--muted); font-size: 10px; }
+    .quantity { display: flex; align-items: center; gap: 9px; margin-top: 10px; }
+    .quantity button, .remove-item { padding: 0 3px; border: 0; background: transparent; font-size: 14px; }
+    .quantity span { font-size: 10px; }
+    .remove-item { align-self: start; color: var(--muted); font-size: 16px; }
+    .cart-foot { padding-top: 18px; border-top: 1px solid var(--line); }
+    .subtotal { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; font-weight: 600; }
+    .shipping-note { margin-bottom: 17px; color: var(--muted); font-size: 10px; }
+    .checkout { width: 100%; justify-content: space-between; }
+    .toast { position: fixed; z-index: 12; right: 22px; bottom: 22px; padding: 13px 17px; background: var(--ink); color: white; font-size: 11px; opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity .2s, transform .2s; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    @keyframes arrive { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: .9fr 1.1fr; gap: 28px; min-height: 470px; }
+      .hero-image { min-height: 360px; }
+      .hero-copy { padding-left: 0; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); row-gap: 26px; }
+      .benefit { font-size: 9px; }
+      .section-heading { align-items: start; flex-direction: column; }
+    }
+    @media (max-width: 620px) {
+      .announcement { font-size: 9px; }
+      .nav, .hero, .section-inner, .footer-inner { width: calc(100% - 36px); }
+      .nav { height: 62px; grid-template-columns: 1fr auto; }
+      .nav-links { display: none; }
+      .brand { font-size: 16px; }
+      .nav-actions { gap: 8px; }
+      .nav-actions .text-button { display: none; }
+      .hero { grid-template-columns: 1fr; gap: 29px; padding: 47px 0 38px; }
+      h1 { max-width: 390px; margin: 17px 0 13px; font-size: 46px; }
+      .hero-copy > p { max-width: 330px; font-size: 12px; }
+      .hero-notes { margin-top: 22px; }
+      .hero-image { min-height: 340px; }
+      .hero-sticker { left: 13px; width: 77px; height: 77px; }
+      .benefits { grid-template-columns: 1fr 1fr; gap: 17px 0; padding: 18px 0; }
+      .benefit:nth-child(2) { border: 0; }
+      .shop { padding: 52px 0 58px; }
+      h2 { font-size: 29px; }
+      .filters { gap: 6px; }
+      .filter-button { padding: 8px 10px; font-size: 9px; }
+      .product-grid { gap: 22px 10px; }
+      .product-visual { aspect-ratio: 1 / 1.12; }
+      .product-meta h3 { font-size: 11px; }
+      .price { font-size: 11px; }
+      .product-detail { font-size: 9px; }
+      .tag { top: 8px; left: 8px; padding: 5px 6px; font-size: 8px; }
+      .quick-add { right: 7px; bottom: 7px; width: 33px; height: 33px; }
+      .story { grid-template-columns: 1fr; }
+      .story-image { min-height: 280px; max-height: 320px; }
+      .story-copy { padding: 38px 25px 42px; }
+      .story-copy h2 { font-size: 32px; }
+      .newsletter { align-items: start; flex-direction: column; gap: 22px; padding: 42px 0; }
+      .subscribe-form { width: 100%; }
+      .footer-inner { align-items: start; flex-wrap: wrap; padding: 21px 0; }
+      .footer-note { order: 2; width: 100%; }
+      .footer-links { gap: 13px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <div class="announcement"><span><strong>Diseño funcional</strong> · Objetos para casa pensados para impresión 3D</span></div>
+  <header class="site-header">
+    <nav class="nav" aria-label="Navegación principal">
+      <a class="brand" href="#inicio" aria-label="La Trastería, inicio"><span class="brand-mark">t.</span> la trastería</a>
+      <div class="nav-links"><a href="#tienda">Tienda</a><a href="#historia">Cómo lo hacemos</a><a href="#newsletter">Novedades</a></div>
+      <div class="nav-actions"><a class="text-button" href="#tienda">Ver colección</a><button class="icon-button cart-trigger" type="button" aria-label="Abrir carrito">Bolsa <span class="cart-count" id="cart-count">0</span></button></div>
+    </nav>
+  </header>
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-copy">
+        <div class="eyebrow">Diseñado aquí. Hecho para ti.</div>
+        <h1>Tu casa, un poco más <em>tuya.</em></h1>
+        <p>Objetos cotidianos con algo especial. Diseñados con calma, impresos bajo demanda y pensados para acompañarte mucho tiempo.</p>
+        <a class="primary-button" href="#tienda">Explorar la colección <span aria-hidden="true">↗</span></a>
+        <div class="hero-notes"><span><b>✳</b> Diseño funcional</span><span><b>↻</b> Impresión 3D</span></div>
+      </div>
+      <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&amp;fit=crop&amp;w=1200&amp;q=85" alt="Rincón de una casa luminosa con muebles y decoración de tonos naturales">
+        <div class="hero-sticker"><strong>3D</strong>diseño<br>para tu casa<br>en cada pieza</div>
+        <span class="image-caption">Pequeñas cosas. Un hogar más cómodo.</span>
+      </div>
+    </section>
+    <section class="section" aria-label="Ventajas">
+      <div class="section-inner benefits">
+        <div class="benefit"><span class="benefit-icon">⌂</span> Diseño para casa</div>
+        <div class="benefit"><span class="benefit-icon">⟳</span> Impresión 3D</div>
+        <div class="benefit"><span class="benefit-icon">✳</span> Objetos funcionales</div>
+        <div class="benefit"><span class="benefit-icon">♡</span> Para usar de verdad</div>
+      </div>
+    </section>
+    <section class="section" id="tienda">
+      <div class="section-inner shop">
+        <div class="section-heading">
+          <div><div class="eyebrow">Piezas que encuentran su sitio</div><h2>La colección</h2><p class="section-subtitle">Diseño útil, sin complicaciones.</p></div>
+          <div class="filters" role="group" aria-label="Filtrar productos">
+            <button class="filter-button active" data-filter="Todos" type="button">Todo</button>
+            <button class="filter-button" data-filter="Orden" type="button">Orden</button>
+            <button class="filter-button" data-filter="Luz" type="button">Luz</button>
+            <button class="filter-button" data-filter="Macetas" type="button">Macetas</button>
+            <button class="filter-button" data-filter="Pared" type="button">Pared</button>
+          </div>
+        </div>
+        <div class="product-grid" id="product-grid" aria-live="polite"></div>
+      </div>
+    </section>
+    <section class="section" id="historia">
+      <div class="section-inner story">
+        <div class="story-image"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&amp;fit=crop&amp;w=1000&amp;q=85" alt="Salón acogedor con una estantería de objetos cotidianos y plantas"></div>
+        <div class="story-copy"><div class="eyebrow">Diseño con intención</div><h2>Pequeñas soluciones para cada rincón.</h2><p>Una colección de objetos decorativos y útiles para casa, concebidos para fabricarse con impresión 3D. Elige la pieza, encuentra su sitio y hazla parte de tu día a día.</p><a class="underlined-link" href="#tienda">Encuentra tu próxima pieza <span aria-hidden="true">→</span></a></div>
+      </div>
+    </section>
+    <section class="section" id="newsletter">
+      <div class="section-inner newsletter"><div><h2>Una nota de vez en cuando.</h2><p>Nuevos objetos, ideas para casa y nada de ruido.</p></div><form class="subscribe-form" id="subscribe-form"><input aria-label="Tu correo electrónico" type="email" placeholder="Tu correo electrónico" required><button type="submit">Apuntarme ↗</button></form></div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="footer-inner"><a class="brand" href="#inicio"><span class="brand-mark">t.</span> la trastería</a><span class="footer-note">Objetos para vivir mejor · Hechos con cuidado en España</span><div class="footer-links"><a href="#tienda">Tienda</a><a href="mailto:hola@latrasteria.es">Contacto</a><a href="#historia">Envíos y devoluciones</a></div></div></footer>
+  <div class="cart-overlay" id="cart-overlay" aria-hidden="true">
+    <aside class="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+      <div class="cart-head"><h2 id="cart-title">Tu bolsa <span id="cart-title-count"></span></h2><button class="close-cart" type="button" aria-label="Cerrar carrito">×</button></div>
+      <div class="cart-items" id="cart-items"></div>
+      <div class="cart-foot"><div class="subtotal"><span>Subtotal</span><span id="cart-subtotal">0,00 €</span></div><p class="shipping-note">Los gastos de envío se concretarán al configurar la tienda.</p><button class="primary-button checkout" type="button">Continuar con el pedido <span aria-hidden="true">→</span></button></div>
+    </aside>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    const products = [
+      { id: "nido", name: "Nido · organizador", category: "Orden", detail: "Escritorio · 3 piezas", price: 24, tag: "Más querido", image: "photo-1494438639946-1ebd1d20bf85", alt: "Escritorio ordenado con útiles de escritura y objetos de diseño" },
+      { id: "lumo", name: "Lumo · lámpara", category: "Luz", detail: "Luz ambiental · E14", price: 48, tag: "Nuevo", image: "photo-1507473885765-e6ed057f782c", alt: "Lámpara de sobremesa encendida en un interior cálido" },
+      { id: "brote", name: "Brote · macetero", category: "Macetas", detail: "Autorriego · 12 cm", price: 29, tag: "Favorito", image: "photo-1485955900006-10f4d324d411", alt: "Planta verde en una maceta decorativa sobre una mesa" },
+      { id: "onda", name: "Onda · ganchos", category: "Pared", detail: "Pack de 3 · sin taladro", price: 18, tag: "Pack ahorro", image: "photo-1616486029423-aaa4789e8c9a", alt: "Detalle de interior contemporáneo con objetos de pared" },
+      { id: "cala", name: "Cala · bandeja", category: "Orden", detail: "Vacía bolsillos · 20 cm", price: 22, tag: "", image: "photo-1602874801007-bd458bb1b8b6", alt: "Bandeja decorativa sobre una mesa en una casa luminosa" },
+      { id: "sur", name: "Sur · soporte", category: "Orden", detail: "Móvil · ángulo ajustable", price: 16, tag: "", image: "photo-1496181133206-80ce9b88a853", alt: "Objetos de trabajo y tecnología sobre un escritorio" },
+      { id: "marea", name: "Marea · florero", category: "Macetas", detail: "Flores secas · 18 cm", price: 26, tag: "Edición corta", image: "photo-1578749556568-bc2c40e68b61", alt: "Jarrón artesanal de cerámica con diseño escultórico" },
+      { id: "arco", name: "Arco · colgador", category: "Pared", detail: "Entrada · carga 3 kg", price: 20, tag: "", image: "photo-1618221195710-dd6b41faaea6", alt: "Espacio interior sereno con detalles de decoración" }
+    ];
+    const colors = ["#d7ed9f", "#ed7658", "#a9c8d8"];
+    const grid = document.querySelector("#product-grid");
+    const overlay = document.querySelector("#cart-overlay");
+    const cartItems = document.querySelector("#cart-items");
+    const euro = new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" });
+    let cart = JSON.parse(localStorage.getItem("latrasteria-cart") || "[]");
+    let toastTimer;
+
+    function renderProducts(filter = "Todos") {
+      grid.innerHTML = products.filter(product => filter === "Todos" || product.category === filter).map((product, index) => `
+        <article class="product-card" style="animation-delay:${index * 45}ms">
+          <div class="product-visual"><img loading="lazy" src="https://images.unsplash.com/${product.image}?auto=format&amp;fit=crop&amp;w=700&amp;q=80" alt="${product.alt}">${product.tag ? `<span class="tag">${product.tag}</span>` : ""}<button class="quick-add" type="button" data-add="${product.id}" aria-label="Añadir ${product.name} al carrito">+</button></div>
+          <div class="product-meta"><h3>${product.name}</h3><span class="price">${euro.format(product.price)}</span></div>
+          <div class="product-detail"><span>${product.detail}</span><span class="swatches" aria-label="Colores disponibles">${colors.map(color => `<i class="swatch" style="background:${color}"></i>`).join("")}</span></div>
+        </article>`).join("");
+    }
+
+    function persistCart() {
+      localStorage.setItem("latrasteria-cart", JSON.stringify(cart));
+      renderCart();
+    }
+
+    function renderCart() {
+      const count = cart.reduce((total, item) => total + item.quantity, 0);
+      const subtotal = cart.reduce((total, item) => total + products.find(product => product.id === item.id).price * item.quantity, 0);
+      document.querySelector("#cart-count").textContent = count;
+      document.querySelector("#cart-title-count").textContent = count ? `(${count})` : "";
+      document.querySelector("#cart-subtotal").textContent = euro.format(subtotal);
+      cartItems.innerHTML = cart.length ? cart.map(item => {
+        const product = products.find(entry => entry.id === item.id);
+        return `<div class="cart-row"><img src="https://images.unsplash.com/${product.image}?auto=format&amp;fit=crop&amp;w=180&amp;q=75" alt=""><div><h3>${product.name}</h3><p>${euro.format(product.price)}</p><div class="quantity"><button type="button" data-quantity="-1" data-id="${product.id}" aria-label="Quitar una unidad">−</button><span>${item.quantity}</span><button type="button" data-quantity="1" data-id="${product.id}" aria-label="Añadir una unidad">+</button></div></div><button class="remove-item" type="button" data-remove="${product.id}" aria-label="Eliminar ${product.name}">×</button></div>`;
+      }).join("") : `<div class="empty-cart">Tu bolsa está esperando<br>algo bonito.</div>`;
+      document.querySelector(".checkout").disabled = cart.length === 0;
+      document.querySelector(".checkout").style.opacity = cart.length ? "1" : ".55";
+    }
+
+    function showToast(message) {
+      const toast = document.querySelector("#toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
+    }
+
+    function setCartOpen(open) {
+      overlay.classList.toggle("open", open);
+      overlay.setAttribute("aria-hidden", String(!open));
+      document.body.style.overflow = open ? "hidden" : "";
+      if (open) document.querySelector(".close-cart").focus();
+    }
+
+    document.querySelector(".filters").addEventListener("click", event => {
+      const button = event.target.closest("[data-filter]");
+      if (!button) return;
+      document.querySelectorAll(".filter-button").forEach(filter => filter.classList.toggle("active", filter === button));
+      renderProducts(button.dataset.filter);
+    });
+    grid.addEventListener("click", event => {
+      const button = event.target.closest("[data-add]");
+      if (!button) return;
+      const product = products.find(entry => entry.id === button.dataset.add);
+      const item = cart.find(entry => entry.id === product.id);
+      if (item) item.quantity += 1;
+      else cart.push({ id: product.id, quantity: 1 });
+      persistCart();
+      showToast(`${product.name} añadido a tu bolsa`);
+    });
+    cartItems.addEventListener("click", event => {
+      const remove = event.target.closest("[data-remove]");
+      const quantity = event.target.closest("[data-quantity]");
+      if (remove) cart = cart.filter(item => item.id !== remove.dataset.remove);
+      if (quantity) {
+        const item = cart.find(entry => entry.id === quantity.dataset.id);
+        item.quantity += Number(quantity.dataset.quantity);
+        if (item.quantity <= 0) cart = cart.filter(entry => entry.id !== item.id);
+      }
+      persistCart();
+    });
+    document.querySelector(".cart-trigger").addEventListener("click", () => setCartOpen(true));
+    document.querySelector(".close-cart").addEventListener("click", () => setCartOpen(false));
+    overlay.addEventListener("click", event => { if (event.target === overlay) setCartOpen(false); });
+    document.addEventListener("keydown", event => { if (event.key === "Escape" && overlay.classList.contains("open")) setCartOpen(false); });
+    document.querySelector(".checkout").addEventListener("click", () => showToast("¡Gracias! El pago estará disponible muy pronto."));
+    document.querySelector("#subscribe-form").addEventListener("submit", event => {
+      event.preventDefault();
+      showToast("¡Apuntada! Pronto tendrás noticias nuestras.");
+      event.currentTarget.reset();
+    });
+
+    renderProducts();
+    renderCart();
+  </script>
+</body>
+</html>
