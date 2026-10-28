@@ -315,6 +315,27 @@
       });
     }
 
+    function trackPurchase() {
+      const items = cart.map(item => {
+        const product = products.find(entry => entry.id === item.id);
+        return {
+          item_id: product.id,
+          item_name: product.name,
+          item_category: product.category,
+          price: product.price,
+          quantity: item.quantity
+        };
+      });
+      const value = items.reduce((total, item) => total + item.price * item.quantity, 0);
+
+      gtag("event", "purchase", {
+        transaction_id: `demo-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+        currency: "EUR",
+        value,
+        items
+      });
+    }
+
     function persistCart() {
       localStorage.setItem("latrasteria-cart", JSON.stringify(cart));
       renderCart();
@@ -408,6 +429,7 @@
       document.querySelector(".checkout-note").textContent = hasItems
         ? "Esta tienda aún no tiene pasarela de pago. No se ha procesado ningún pago y tu pedido no está confirmado. Tu carrito se conserva."
         : "Aún no hay artículos en tu bolsa.";
+      if (hasItems) trackPurchase();
       setThankYouOpen(true);
     });
     document.querySelector("#subscribe-form").addEventListener("submit", event => {
