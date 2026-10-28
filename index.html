@@ -330,8 +330,6 @@
         const product = products.find(entry => entry.id === item.id);
         return `<div class="cart-row"><img src="https://images.unsplash.com/${product.image}?auto=format&amp;fit=crop&amp;w=180&amp;q=75" alt=""><div><h3>${product.name}</h3><p>${euro.format(product.price)}</p><div class="quantity"><button type="button" data-quantity="-1" data-id="${product.id}" aria-label="Quitar una unidad">−</button><span>${item.quantity}</span><button type="button" data-quantity="1" data-id="${product.id}" aria-label="Añadir una unidad">+</button></div></div><button class="remove-item" type="button" data-remove="${product.id}" aria-label="Eliminar ${product.name}">×</button></div>`;
       }).join("") : `<div class="empty-cart">Tu bolsa está esperando<br>algo bonito.</div>`;
-      document.querySelector(".checkout").disabled = cart.length === 0;
-      document.querySelector(".checkout").style.opacity = cart.length ? "1" : ".55";
     }
 
     function showToast(message) {
@@ -401,7 +399,17 @@
       if (thankYouOverlay.classList.contains("open")) setThankYouOpen(false);
       else if (overlay.classList.contains("open")) setCartOpen(false);
     });
-    document.querySelector(".checkout").addEventListener("click", () => setThankYouOpen(true));
+    document.querySelector(".checkout").addEventListener("click", () => {
+      const hasItems = cart.length > 0;
+      document.querySelector("#thank-you-title").textContent = hasItems ? "¡Gracias por elegirnos!" : "Tu bolsa está vacía";
+      document.querySelector("#thank-you-description").textContent = hasItems
+        ? "Nos alegra que hayas encontrado algo para tu casa."
+        : "Añade algún producto a tu bolsa para continuar.";
+      document.querySelector(".checkout-note").textContent = hasItems
+        ? "Esta tienda aún no tiene pasarela de pago. No se ha procesado ningún pago y tu pedido no está confirmado. Tu carrito se conserva."
+        : "Aún no hay artículos en tu bolsa.";
+      setThankYouOpen(true);
+    });
     document.querySelector("#subscribe-form").addEventListener("submit", event => {
       event.preventDefault();
       showToast("¡Apuntada! Pronto tendrás noticias nuestras.");
