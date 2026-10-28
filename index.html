@@ -137,6 +137,15 @@
     .subtotal { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; font-weight: 600; }
     .shipping-note { margin-bottom: 17px; color: var(--muted); font-size: 10px; }
     .checkout { width: 100%; justify-content: space-between; }
+    .thank-you-overlay { position: fixed; z-index: 11; inset: 0; display: grid; place-items: center; padding: 20px; visibility: hidden; background: #10150e88; opacity: 0; transition: opacity .25s, visibility .25s; }
+    .thank-you-overlay.open { visibility: visible; opacity: 1; }
+    .thank-you-dialog { position: relative; width: min(460px, 100%); padding: 42px 32px 32px; background: var(--paper); text-align: center; transform: translateY(10px); transition: transform .25s ease; }
+    .thank-you-overlay.open .thank-you-dialog { transform: translateY(0); }
+    .thank-you-icon { width: 48px; height: 48px; display: grid; place-items: center; margin: 0 auto 19px; border-radius: 50%; background: var(--lime); color: var(--green); font-size: 24px; }
+    .thank-you-dialog h2 { margin-bottom: 13px; }
+    .thank-you-dialog p { margin-bottom: 12px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+    .thank-you-dialog .checkout-note { margin: 18px 0 24px; padding: 12px; background: #ed76581a; color: var(--ink); font-size: 11px; }
+    .thank-you-dialog .primary-button { justify-content: center; }
     .toast { position: fixed; z-index: 12; right: 22px; bottom: 22px; padding: 13px 17px; background: var(--ink); color: white; font-size: 11px; opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity .2s, transform .2s; }
     .toast.show { opacity: 1; transform: translateY(0); }
     @keyframes arrive { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
@@ -253,6 +262,15 @@
       <div class="cart-foot"><div class="subtotal"><span>Subtotal</span><span id="cart-subtotal">0,00 €</span></div><p class="shipping-note">Los gastos de envío se concretarán al configurar la tienda.</p><button class="primary-button checkout" type="button">Continuar con el pedido <span aria-hidden="true">→</span></button></div>
     </aside>
   </div>
+  <div class="thank-you-overlay" id="thank-you-overlay" aria-hidden="true">
+    <section class="thank-you-dialog" role="dialog" aria-modal="true" aria-labelledby="thank-you-title" aria-describedby="thank-you-description">
+      <div class="thank-you-icon" aria-hidden="true">✓</div>
+      <h2 id="thank-you-title">¡Gracias por elegirnos!</h2>
+      <p id="thank-you-description">Nos alegra que hayas encontrado algo para tu casa.</p>
+      <p class="checkout-note">Esta tienda aún no tiene pasarela de pago. No se ha procesado ningún pago y tu pedido no está confirmado. Tu carrito se conserva.</p>
+      <button class="primary-button" id="thank-you-close" type="button">Seguir explorando</button>
+    </section>
+  </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script>
     const products = [
@@ -268,6 +286,7 @@
     const colors = ["#d7ed9f", "#ed7658", "#a9c8d8"];
     const grid = document.querySelector("#product-grid");
     const overlay = document.querySelector("#cart-overlay");
+    const thankYouOverlay = document.querySelector("#thank-you-overlay");
     const cartItems = document.querySelector("#cart-items");
     const euro = new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" });
     let cart = JSON.parse(localStorage.getItem("latrasteria-cart") || "[]");
@@ -330,6 +349,14 @@
       if (open) document.querySelector(".close-cart").focus();
     }
 
+    function setThankYouOpen(open) {
+      thankYouOverlay.classList.toggle("open", open);
+      thankYouOverlay.setAttribute("aria-hidden", String(!open));
+      document.body.style.overflow = open || overlay.classList.contains("open") ? "hidden" : "";
+      if (open) document.querySelector("#thank-you-close").focus();
+      else document.querySelector(".checkout").focus();
+    }
+
     document.querySelector(".filters").addEventListener("click", event => {
       const button = event.target.closest("[data-filter]");
       if (!button) return;
@@ -363,8 +390,18 @@
     document.querySelector(".cart-trigger").addEventListener("click", () => setCartOpen(true));
     document.querySelector(".close-cart").addEventListener("click", () => setCartOpen(false));
     overlay.addEventListener("click", event => { if (event.target === overlay) setCartOpen(false); });
-    document.addEventListener("keydown", event => { if (event.key === "Escape" && overlay.classList.contains("open")) setCartOpen(false); });
-    document.querySelector(".checkout").addEventListener("click", () => showToast("¡Gracias! El pago estará disponible muy pronto."));
+    thankYouOverlay.addEventListener("click", event => { if (event.target === thankYouOverlay) setThankYouOpen(false); });
+    document.querySelector("#thank-you-close").addEventListener("click", () => {
+      setThankYouOpen(false);
+      setCartOpen(false);
+      document.querySelector(".cart-trigger").focus();
+    });
+    document.addEventListener("keydown", event => {
+      if (event.key !== "Escape") return;
+      if (thankYouOverlay.classList.contains("open")) setThankYouOpen(false);
+      else if (overlay.classList.contains("open")) setCartOpen(false);
+    });
+    document.querySelector(".checkout").addEventListener("click", () => setThankYouOpen(true));
     document.querySelector("#subscribe-form").addEventListener("submit", event => {
       event.preventDefault();
       showToast("¡Apuntada! Pronto tendrás noticias nuestras.");
